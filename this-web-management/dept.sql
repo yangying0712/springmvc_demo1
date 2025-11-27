@@ -15,3 +15,5 @@ INSERT INTO dept VALUES (1,'学工部','2024-09-25 09:47:40','2024-09-25 09:47:4
 # 查询全部的部门
 SELECT id, name, create_time, update_time FROM dept order by update_time desc;
 
+# 添加部门（git测试）
+INSERT INTO dept VALUES (7,'测试部','2024-09-25 09:47:40','2024-09-25 09:47:40');

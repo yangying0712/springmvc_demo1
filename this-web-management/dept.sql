@@ -17,3 +17,5 @@ SELECT id, name, create_time, update_time FROM dept order by update_time desc;
 
 # 查询部门名称为学工部（唯一 )的部门信息（测试git）
 SELECT id, name, create_time, update_time FROM dept WHERE name = '学工部';
+# 添加部门（git测试）
+INSERT INTO dept VALUES (7,'测试部','2024-09-25 09:47:40','2024-09-25 09:47:40');

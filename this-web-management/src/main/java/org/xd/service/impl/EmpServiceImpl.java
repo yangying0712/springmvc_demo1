@@ -39,7 +39,8 @@ public class EmpServiceImpl implements EmpService {
         //不用强转，直接PageInfo<Emp> p = new PageInfo<>(list);把list丢进去
 //        List<Emp> empList = empMapper.list();
 //        Page<Emp> empPage = (Page<Emp>) empList;
-        Page<Emp> empPage = (Page<Emp>) empMapper.list();
-        return new PageResult<Emp>(empPage.getTotal(), empPage.getResult());
+        Page<Emp> empPage = (Page<Emp>) empMapper.list(name, gender,
+                begin,end);
+        return new PageResult<>(empPage.getTotal(), empPage.getResult());
     }
 }

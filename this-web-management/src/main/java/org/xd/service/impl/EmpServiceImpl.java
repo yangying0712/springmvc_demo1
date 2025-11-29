@@ -4,11 +4,16 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.xd.mapper.EmpMapper;
 import org.xd.pojo.Emp;
+import org.xd.pojo.EmpExpr;
 import org.xd.pojo.EmpQueryParam;
 import org.xd.pojo.PageResult;
 import org.xd.service.EmpService;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 员工管理
@@ -18,6 +23,7 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpMapper empMapper;
+
 
 /*    @Override
     public PageResult<Emp> page(Integer page, Integer pageSize) {
@@ -54,4 +60,21 @@ public class EmpServiceImpl implements EmpService {
 
         return new PageResult<>(empPage.getTotal(), empPage.getResult());
     }
+
+    @Override
+    public void save(Emp emp) {
+        emp.setCreateTime(LocalDateTime.now());
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.insert(emp);
+
+        List<EmpExpr> exprList = emp.getExprList();
+        if (!CollectionUtils.isEmpty(exprList)) {
+            for (EmpExpr expr : exprList) {
+                expr.setEmpId(emp.getId());
+            }
+            empMapper.insertBatch(exprList);
+        }
+        }
+
+
 }

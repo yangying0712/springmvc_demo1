@@ -5,7 +5,7 @@ import org.xd.pojo.EmpQueryParam;
 import org.xd.pojo.PageResult;
 
 public interface EmpService {
-/*    *//**
+/*    *
      * 分页查询
      * @param page 页码
      * @param pageSize 每页记录数
@@ -18,4 +18,10 @@ public interface EmpService {
      * @param param 查询参数
      */
     PageResult<Emp> page(EmpQueryParam  param);
+
+    /**
+     * 添加员工
+     * @param emp 员工数据
+     */
+    void save(Emp emp);
 }

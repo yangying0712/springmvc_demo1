@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xd.mapper.EmpMapper;
 import org.xd.pojo.Emp;
+import org.xd.pojo.EmpQueryParam;
 import org.xd.pojo.PageResult;
 import org.xd.service.EmpService;
-
-import java.time.LocalDate;
 
 /**
  * 员工管理
@@ -32,7 +31,7 @@ public class EmpServiceImpl implements EmpService {
         //3. 封装结果
         return new PageResult<Emp>(total, empList);
     }*/
-    @Override
+/*    @Override
     public PageResult<Emp> page(Integer page, Integer pageSize, String name, Integer gender,
                                 LocalDate begin, LocalDate end) {
         PageHelper.startPage(page, pageSize);
@@ -41,6 +40,18 @@ public class EmpServiceImpl implements EmpService {
 //        Page<Emp> empPage = (Page<Emp>) empList;
         Page<Emp> empPage = (Page<Emp>) empMapper.list(name, gender,
                 begin,end);
+        return new PageResult<>(empPage.getTotal(), empPage.getResult());
+    }*/
+    @Override
+    public PageResult<Emp> page(EmpQueryParam  param) {
+        PageHelper.startPage(param.getPage(), param.getPageSize());
+        //不用强转，直接PageInfo<Emp> p = new PageInfo<>(list);把list丢进去
+    //        List<Emp> empList = empMapper.list();
+    //        Page<Emp> empPage = (Page<Emp>) empList;
+    //    Page<Emp> empPage = (Page<Emp>) empMapper.list(param.getName(), param.getGender(),
+    //            param.getBegin(),param.getEnd());
+        Page<Emp> empPage = (Page<Emp>) empMapper.list(param);
+
         return new PageResult<>(empPage.getTotal(), empPage.getResult());
     }
 }

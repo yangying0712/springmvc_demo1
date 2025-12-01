@@ -20,10 +20,6 @@
         </where>order by e.update_time desc
     </select>
 
-    <insert id="insertBatch">
-        insert into emp_expr(emp_id, begin, end, company, job) VALUES
-        <foreach collection="list" item="item" separator=",">
-            (#{item.empId},#{item.begin},#{item.end},#{item.company},#{item.job})
-        </foreach>
-    </insert>
 </mapper>
+
+

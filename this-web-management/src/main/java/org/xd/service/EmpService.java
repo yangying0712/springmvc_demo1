@@ -23,5 +23,5 @@ public interface EmpService {
      * 添加员工
      * @param emp 员工数据
      */
-    void save(Emp emp);
+    void save(Emp emp) throws Exception;
 }

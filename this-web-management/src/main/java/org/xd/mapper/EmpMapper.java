@@ -41,5 +41,5 @@ public interface EmpMapper {
     void insert(Emp emp);
 
 
-    void insertBatch(List<EmpExpr> exprList);
+
 }

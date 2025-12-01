@@ -4,12 +4,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.xd.mapper.EmpExprMapper;
 import org.xd.mapper.EmpMapper;
-import org.xd.pojo.Emp;
-import org.xd.pojo.EmpExpr;
-import org.xd.pojo.EmpQueryParam;
-import org.xd.pojo.PageResult;
+import org.xd.pojo.*;
+import org.xd.service.EmpLogService;
 import org.xd.service.EmpService;
 
 import java.time.LocalDateTime;
@@ -23,6 +23,10 @@ public class EmpServiceImpl implements EmpService {
 
     @Autowired
     private EmpMapper empMapper;
+    @Autowired
+    private EmpExprMapper empExprMapper;
+    @Autowired
+    private EmpLogService empLogService;
 
 
 /*    @Override
@@ -61,20 +65,33 @@ public class EmpServiceImpl implements EmpService {
         return new PageResult<>(empPage.getTotal(), empPage.getResult());
     }
 
+    @Transactional(rollbackFor = {Exception.class})
     @Override
     public void save(Emp emp) {
-        emp.setCreateTime(LocalDateTime.now());
-        emp.setUpdateTime(LocalDateTime.now());
-        empMapper.insert(emp);
+        try {
+            //1.补全基础属性
+            emp.setCreateTime(LocalDateTime.now());
+            emp.setUpdateTime(LocalDateTime.now());
 
-        List<EmpExpr> exprList = emp.getExprList();
-        if (!CollectionUtils.isEmpty(exprList)) {
-            for (EmpExpr expr : exprList) {
-                expr.setEmpId(emp.getId());
+            //2.保存员工基本信息
+            empMapper.insert(emp);
+
+            int i=1/0;
+
+            //3. 保存员工的工作经历信息 - 批量
+            Integer empId = emp.getId();
+            List<EmpExpr> exprList = emp.getExprList();
+            if(!CollectionUtils.isEmpty(exprList)){
+                exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+               empExprMapper.insertBatch(exprList);
             }
-            empMapper.insertBatch(exprList);
+        } finally {
+            //记录操作日志
+            EmpLog empLog = new EmpLog(null, LocalDateTime.now(), emp.toString());
+            empLogService.insertLog(empLog);
         }
-        }
+
+    }
 
 
 }

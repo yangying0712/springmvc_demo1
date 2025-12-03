@@ -73,7 +73,7 @@ public class StudentController {
     /**
      * 违纪处理
      */
-    @PostMapping("/{id}/{score}")
+    @PostMapping("/violation/{id}/{score}")
     public Result handleViolation(@PathVariable Integer id, @PathVariable Integer score) {
         log.info("违纪处理: id={}, score={}", id, score);
         studentService.handleViolation(id, score);

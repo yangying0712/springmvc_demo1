@@ -13,7 +13,7 @@
                 c.name LIKE CONCAT('%', #{name},'%')
             </if>
             <if test="begin != null and begin != ''">
-                AND c.begin_date &gt;= #{begin}
+                AND c.end_date &gt;= #{begin}
             </if>
             <if test="end != null and end != ''">
                 AND c.end_date &lt;= #{end}

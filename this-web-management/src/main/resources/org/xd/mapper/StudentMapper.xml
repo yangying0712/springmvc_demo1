@@ -67,12 +67,12 @@
 
     <!-- 统计每个班级的人数 -->
     <select id="countStudentByClazz" resultType="java.util.Map">
-        SELECT c.name, COUNT(*) AS value
+        SELECT c.id AS name, COUNT(*) AS value
         FROM student s
         LEFT JOIN clazz c ON s.clazz_id = c.id
-        WHERE c.name IS NOT NULL
-        GROUP BY c.name
-        ORDER BY value DESC
+        WHERE c.id IS NOT NULL
+        GROUP BY c.id
+        ORDER BY c.id
     </select>
 
     <!-- 统计学生的学历信息 -->

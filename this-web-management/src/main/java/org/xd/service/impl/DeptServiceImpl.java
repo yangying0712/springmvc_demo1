@@ -21,6 +21,12 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public void deleteById(Integer id) {
+        //1. 检查部门下是否有员工
+        Long count = deptMapper.countEmpByDeptId(id);
+        if (count > 0) {
+            throw new org.xd.exception.BusinessException("对不起，当前部门下有员工，不能直接删除！");
+        }
+        //2. 删除部门
         deptMapper.deleteById(id);
     }
 

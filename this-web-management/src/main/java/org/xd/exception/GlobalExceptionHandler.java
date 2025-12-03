@@ -12,6 +12,15 @@ import org.xd.pojo.Result;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    
+    //处理业务异常
+    @ExceptionHandler
+    public Result handleBusinessException(BusinessException e){
+        log.error("业务异常：", e);
+        //捕获到异常之后，响应一个标准的Result
+        return Result.error(e.getMessage());
+    }
+
     //处理异常
     @ExceptionHandler
     public Result ex(Exception e){//方法形参中指定能够处理的异常类型

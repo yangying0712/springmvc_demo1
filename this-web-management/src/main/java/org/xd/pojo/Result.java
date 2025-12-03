@@ -2,8 +2,6 @@ package org.xd.pojo;
 
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
  * 后端统一返回结果
  */
@@ -36,4 +34,10 @@ public class Result {
         return result;
     }
 
+    public static Result fail(String s) {
+        Result result = new Result();
+        result.msg = "fail:"+ s;
+        result.code = 0;
+        return result;
+    }
 }

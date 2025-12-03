@@ -9,6 +9,8 @@ import org.xd.pojo.PageResult;
 import org.xd.pojo.Result;
 import org.xd.service.EmpService;
 
+import java.util.List;
+
 /**
  * 员工管理
  */
@@ -45,6 +47,44 @@ public class EmpController {
     public Result save(@RequestBody Emp emp) throws Exception {
         log.info("请求参数emp: {}", emp);
         empService.save(emp);
+        return Result.success();
+    }
+
+/*    *//**
+     * 删除员工
+     *//*
+    @DeleteMapping
+    public Result delete(Integer[] ids){
+        log.info("删除员工：{}", Arrays.toString(ids));
+//        empService.delete(id);
+        return Result.success();
+    }*/
+    /**
+     * 删除员工
+     */
+    @DeleteMapping
+    public Result delete(@RequestParam List<Integer> ids){
+        log.info("删除员工：{}", ids);
+        empService.delete(ids);
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询员工信息
+     */
+    @GetMapping("/{id}")
+    public Result getInfo(@PathVariable Integer id){
+        log.info("根据id查询员工信息：{}", id);
+        Emp emp = empService.getById(id);
+        return Result.success(emp);
+    }
+    /**
+     * 修改员工信息
+     */
+    @PutMapping
+    public Result update(@RequestBody Emp emp){
+        log.info("更新员工信息：{}", emp);
+        empService.update(emp);
         return Result.success();
     }
 

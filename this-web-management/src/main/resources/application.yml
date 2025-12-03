@@ -30,5 +30,9 @@ pagehelper:
 logging:
     level:
         org.springframework.jdbc.support.JdbcTransactionManager: debug
-
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName : java-ai-kse0913
+    region: cn-beijing
 

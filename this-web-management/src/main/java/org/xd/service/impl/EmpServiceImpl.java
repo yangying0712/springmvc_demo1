@@ -2,6 +2,7 @@ package org.xd.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,11 +14,13 @@ import org.xd.service.EmpLogService;
 import org.xd.service.EmpService;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * 员工管理
  */
+@Slf4j
 @Service
 public class EmpServiceImpl implements EmpService {
 
@@ -76,7 +79,7 @@ public class EmpServiceImpl implements EmpService {
             //2.保存员工基本信息
             empMapper.insert(emp);
 
-            int i=1/0;
+//            int i=1/0;
 
             //3. 保存员工的工作经历信息 - 批量
             Integer empId = emp.getId();
@@ -93,5 +96,48 @@ public class EmpServiceImpl implements EmpService {
 
     }
 
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void delete(List<Integer> ids) {
+        //1. 删除员工
+        empMapper.deleteByIds(ids);
+        //2. 删除员工对应的工作经历
+        empExprMapper.deleteByEmpIds(ids);
+    }
 
+    @Override
+    public Emp getById(Integer id) {
+        return empMapper.getById(id);
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void update(Emp emp) {
+        //1.根据ID修改员工基本信息
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+        //2.修改员工对应的工作经历
+        //2.1 删除员工对应的所有工作经历
+        empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
+        //2.2 添加员工新的工作经历
+        List<EmpExpr> exprList = emp.getExprList();
+        if(!CollectionUtils.isEmpty(exprList)){
+            Integer empId = emp.getId();
+            exprList.forEach(empExpr -> empExpr.setEmpId(empId));
+            empExprMapper.insertBatch(exprList);
+        }
+    }
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        //1. 根据用户名和密码查询
+        Emp e= empMapper.selectByUsernameAndPassword(emp);
+        //2. 判断结果, 如果存在，组装登录信息并返回
+        if (e != null) {
+            log.info("员工登录成功：{}", e);
+            return new LoginInfo(e.getId(), e.getUsername(), e.getName(), "admin-token");
+        }
+        //3. 不存在，返回null
+        return null;
+    }
 }

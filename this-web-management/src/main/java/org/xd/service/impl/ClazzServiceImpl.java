@@ -19,6 +19,11 @@ import java.util.List;
 @Service
 public class ClazzServiceImpl implements ClazzService {
 
+    // 班级状态常量
+    private static final String STATUS_COMPLETED = "已结课";
+    private static final String STATUS_NOT_STARTED = "未开班";
+    private static final String STATUS_IN_PROGRESS = "在读中";
+
     @Autowired
     private ClazzMapper clazzMapper;
 
@@ -97,11 +102,11 @@ public class ClazzServiceImpl implements ClazzService {
      */
     private String calculateStatus(Clazz clazz, LocalDate now) {
         if (clazz.getEndDate() != null && now.isAfter(clazz.getEndDate())) {
-            return "已结课";
+            return STATUS_COMPLETED;
         } else if (clazz.getBeginDate() != null && now.isBefore(clazz.getBeginDate())) {
-            return "未开班";
+            return STATUS_NOT_STARTED;
         } else {
-            return "在读中";
+            return STATUS_IN_PROGRESS;
         }
     }
 }

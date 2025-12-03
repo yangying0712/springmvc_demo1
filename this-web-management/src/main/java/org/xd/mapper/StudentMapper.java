@@ -65,13 +65,11 @@ public interface StudentMapper {
      * 统计每个班级的人数
      * @return
      */
-    @MapKey("name")
     List<Map<String, Object>> countStudentByClazz();
 
     /**
      * 统计学生的学历信息
      * @return
      */
-    @MapKey("name")
     List<Map<String, Object>> countStudentByDegree();
 }

@@ -39,4 +39,14 @@ public class ReportController {
         List<Map<String, Object>> genderList = reportService.getEmpGenderData();
         return Result.success(genderList);
     }
+    
+    /**
+     * 统计各个班级的学生人数
+     */
+    @GetMapping("/clazzStudentData")
+    public Result getClazzStudentData(){
+        log.info("统计各个班级的学生人数");
+        JobOption jobOption = reportService.getClazzStudentData();
+        return Result.success(jobOption);
+    }
 }

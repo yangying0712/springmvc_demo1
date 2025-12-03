@@ -1,0 +1,6 @@
+2025-12-03 09:08:47.594 [main] INFO  o.s.t.c.support.AnnotationConfigContextLoaderUtils-Could not detect default configuration classes for test class [org.xd.ThisWebManagmentApplicationTests]: ThisWebManagmentApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-12-03 09:08:47.706 [main] INFO  o.s.b.t.context.SpringBootTestContextBootstrapper-Found @SpringBootConfiguration org.xd.ThisWebManagmentApplication for test class org.xd.ThisWebManagmentApplicationTests
+2025-12-03 09:08:48.134 [main] INFO  org.xd.ThisWebManagmentApplicationTests-Starting ThisWebManagmentApplicationTests using Java 17.0.17 with PID 4562 (started by runner in /home/runner/work/springmvc_demo1/springmvc_demo1/this-web-management)
+2025-12-03 09:08:48.136 [main] INFO  org.xd.ThisWebManagmentApplicationTests-No active profile set, falling back to 1 default profile: "default"
+2025-12-03 09:08:51.194 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver-Exposing 1 endpoint beneath base path '/actuator'
+2025-12-03 09:08:51.305 [main] INFO  org.xd.ThisWebManagmentApplicationTests-Started ThisWebManagmentApplicationTests in 3.481 seconds (process running for 4.586)

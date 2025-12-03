@@ -3,6 +3,7 @@ package org.xd.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xd.mapper.EmpMapper;
+import org.xd.mapper.StudentMapper;
 import org.xd.pojo.JobOption;
 import org.xd.service.ReportService;
 
@@ -14,6 +15,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private EmpMapper empMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
     @Override
     public JobOption getEmpJobData() {
@@ -29,5 +33,21 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Map<String, Object>> getEmpGenderData() {
         return empMapper.countEmpGenderData();
+    }
+
+    @Override
+    public JobOption getStudentCountData() {
+        //1.统计每个班级的学生人数
+        List<Map<String, Object>> list = studentMapper.countStudentByClazz();
+        //2.封装成JobOption对象
+        List<Object> clazzList = list.stream().map(dataMap -> dataMap.get("name")).toList();
+        List<Object> dataList = list.stream().map(dataMap -> dataMap.get("value")).toList();
+
+        return new JobOption(clazzList, dataList);
+    }
+
+    @Override
+    public List<Map<String, Object>> getStudentDegreeData() {
+        return studentMapper.countStudentByDegree();
     }
 }

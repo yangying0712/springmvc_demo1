@@ -53,4 +53,10 @@ public interface EmpService {
      * @return
      */
     LoginInfo login(Emp emp);
+
+    /**
+     * 查询所有员工
+     * @return
+     */
+    List<Emp> listAll();
 }

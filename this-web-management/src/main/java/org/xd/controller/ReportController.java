@@ -12,6 +12,9 @@ import org.xd.service.ReportService;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 报表统计
+ */
 @Slf4j
 @RequestMapping("/report")
 @RestController
@@ -38,5 +41,25 @@ public class ReportController {
         log.info("统计各个性别的员工人数");
         List<Map<String, Object>> genderList = reportService.getEmpGenderData();
         return Result.success(genderList);
+    }
+
+    /**
+     * 统计每个班级的学生人数
+     */
+    @GetMapping("/studentCountData")
+    public Result getStudentCountData(){
+        log.info("统计每个班级的学生人数");
+        JobOption jobOption = reportService.getStudentCountData();
+        return Result.success(jobOption);
+    }
+
+    /**
+     * 统计学生的学历信息
+     */
+    @GetMapping("/studentDegreeData")
+    public Result getStudentDegreeData(){
+        log.info("统计学生的学历信息");
+        List<Map<String, Object>> degreeList = reportService.getStudentDegreeData();
+        return Result.success(degreeList);
     }
 }

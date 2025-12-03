@@ -52,4 +52,12 @@ public interface DeptMapper {
      */
     @Update("UPDATE dept SET name=#{name}, update_time=#{updateTime} WHERE id=#{id}")
     void update(Dept dept);
+
+    /**
+     * 根据部门ID查询员工数量
+     * @param deptId
+     * @return
+     */
+    @Select("SELECT COUNT(*) FROM emp WHERE dept_id = #{deptId}")
+    Long countEmpByDeptId(Integer deptId);
 }

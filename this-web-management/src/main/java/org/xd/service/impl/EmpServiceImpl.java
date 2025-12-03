@@ -140,4 +140,10 @@ public class EmpServiceImpl implements EmpService {
         //3. 不存在，返回null
         return null;
     }
+
+    @Override
+    public List<Emp> listAll() {
+        EmpQueryParam param = new EmpQueryParam();
+        return empMapper.list(param);
+    }
 }

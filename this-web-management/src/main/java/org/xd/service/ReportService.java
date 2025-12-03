@@ -12,7 +12,17 @@ public interface ReportService{
     JobOption getEmpJobData();
 
     /**
-     * 统计各个职位的员工人数
+     * 统计各个性别的员工人数
      */
     List<Map<String, Object>> getEmpGenderData();
+
+    /**
+     * 统计每个班级的学生人数
+     */
+    JobOption getStudentCountData();
+
+    /**
+     * 统计学生的学历信息
+     */
+    List<Map<String, Object>> getStudentDegreeData();
 }

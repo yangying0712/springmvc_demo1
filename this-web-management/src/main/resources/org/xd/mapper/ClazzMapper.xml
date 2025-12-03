@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.xd.mapper.ClazzMapper">
+    <!-- 条件分页查询班级列表 -->
     <select id="list" resultType="org.xd.pojo.Clazz">
         SELECT c.*, e.name AS masterName
         FROM clazz c
@@ -20,4 +21,27 @@
         </where>
         ORDER BY c.id DESC
     </select>
+
+    <!-- 根据ID查询班级 -->
+    <select id="getById" resultType="org.xd.pojo.Clazz">
+        SELECT c.*, e.name AS masterName
+        FROM clazz c
+        LEFT JOIN emp e ON c.master_id = e.id
+        WHERE c.id = #{id}
+    </select>
+
+    <!-- 修改班级信息 -->
+    <update id="updateById">
+        UPDATE clazz
+        <set>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="room != null and room != ''">room = #{room},</if>
+            <if test="beginDate != null">begin_date = #{beginDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="masterId != null">master_id = #{masterId},</if>
+            <if test="subject != null">subject = #{subject},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

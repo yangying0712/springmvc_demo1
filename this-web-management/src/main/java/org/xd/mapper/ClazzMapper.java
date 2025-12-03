@@ -1,6 +1,5 @@
 package org.xd.mapper;
 
-import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.xd.pojo.Clazz;
 import org.xd.pojo.ClazzQueryParam;
@@ -19,6 +18,5 @@ public interface ClazzMapper {
     /**
      * 统计各个班级的学生人数
      */
-    @MapKey("name")
     List<Map<String, Object>> countClazzStudentData();
 }

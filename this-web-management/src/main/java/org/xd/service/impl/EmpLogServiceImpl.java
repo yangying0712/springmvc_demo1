@@ -8,6 +8,8 @@ import org.xd.mapper.EmpLogMapper;
 import org.xd.pojo.EmpLog;
 import org.xd.service.EmpLogService;
 
+import java.util.List;
+
 @Service
 public class EmpLogServiceImpl implements EmpLogService {
 
@@ -18,5 +20,10 @@ public class EmpLogServiceImpl implements EmpLogService {
     @Override
     public void insertLog(EmpLog empLog) {
         empLogMapper.insert(empLog);
+    }
+    
+    @Override
+    public List<EmpLog> list() {
+        return empLogMapper.list();
     }
 }
